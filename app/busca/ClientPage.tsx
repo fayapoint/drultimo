@@ -14,7 +14,7 @@ type Result = {
   excerptHtml?: string;
 };
 
-export default function BuscaPage() {
+export default function BuscaClient() {
   const sp = useSearchParams();
   const router = useRouter();
   const [q, setQ] = useState(sp.get("q") || "");
@@ -36,7 +36,7 @@ export default function BuscaPage() {
   useEffect(() => {
     const initial = sp.get("q");
     if (initial) runSearch(initial);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function onSubmit(e: React.FormEvent) {

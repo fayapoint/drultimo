@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-export const metadata = { title: "Contato | Dr. Ultimo & Convidados" } as const;
-
 export default function ContatoPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-export const metadata = { title: "Newsletter | Dr. Ultimo & Convidados" } as const;
-
 export default function NewsletterPage() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<null | { ok: boolean; msg: string }>(null);
