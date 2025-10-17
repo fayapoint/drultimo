@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Moon, Sun, BookOpen, FileText, Workflow, Home } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
@@ -38,6 +39,8 @@ function ThemeToggle() {
 
 export default function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [q, setQ] = useState("");
   const links = [
     { href: "/", label: "Início", icon: <Home size={16} /> },
     { href: "/docs", label: "Documentos", icon: <FileText size={16} /> },
@@ -70,6 +73,20 @@ export default function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (q.trim()) router.push(`/busca?q=${encodeURIComponent(q)}`);
+            }}
+            className="hidden md:flex items-center"
+          >
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Buscar..."
+              className="rounded-md border border-zinc-200 dark:border-zinc-800 bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </form>
           <ThemeToggle />
         </div>
       </div>

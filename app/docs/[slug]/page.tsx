@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getBySlug, getAllDocs } from "@/lib/content";
 import Markdown from "@/components/Markdown";
 import { ChevronLeft } from "lucide-react";
+import { excerptFromMarkdown } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getAllDocs().map((d) => ({ slug: d.slug }));
@@ -11,7 +12,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const doc = getBySlug(params.slug);
   if (!doc) return { title: "Documento" };
-  return { title: `${doc.title} | Documentos` };
+  const description = excerptFromMarkdown(doc.content, 150);
+  const title = `${doc.title} | Documentos`;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+  };
 }
 
 export default function DocDetailPage({ params }: { params: { slug: string } }) {

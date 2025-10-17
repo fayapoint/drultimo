@@ -4,6 +4,7 @@ import { getBySlug, getAllRoteiros } from "@/lib/content";
 import Markdown from "@/components/Markdown";
 import EpisodeCover from "@/components/EpisodeCover";
 import { ChevronLeft } from "lucide-react";
+import { excerptFromMarkdown } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getAllRoteiros().map((r) => ({ slug: r.slug }));
@@ -13,7 +14,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const doc = getBySlug(params.slug);
   if (!doc) return { title: "Roteiro" };
   const prefix = doc.episode ? `Ep. ${doc.episode}: ` : "";
-  return { title: `${prefix}${doc.title} | Roteiros` };
+  const pageTitle = `${prefix}${doc.title} | Roteiros`;
+  const description = excerptFromMarkdown(doc.content, 150);
+  return {
+    title: pageTitle,
+    openGraph: {
+      title: pageTitle,
+      description,
+    },
+    description,
+  };
 }
 
 export default function RoteiroDetailPage({ params }: { params: { slug: string } }) {

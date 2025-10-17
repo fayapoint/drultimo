@@ -5,6 +5,8 @@ import ThemeProvider from "@/components/ThemeProvider";
 import SiteHeader from "@/components/SiteHeader";
 import MermaidInit from "@/components/MermaidInit";
 import Footer from "@/components/Footer";
+import { siteDescription, siteName, siteUrl } from "@/lib/site";
+import PWARegister from "@/components/PWARegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +19,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Ultimo & Convidados",
-  description: "Podcast, documentos, roteiros e plano de implementação",
+  title: siteName,
+  description: siteDescription,
+  metadataBase: new URL(siteUrl),
+  manifest: "/manifest.webmanifest",
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName,
+    title: siteName,
+    description: siteDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -34,6 +49,7 @@ export default function RootLayout({
           <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
           <Footer />
           <MermaidInit />
+          <PWARegister />
         </ThemeProvider>
       </body>
     </html>
