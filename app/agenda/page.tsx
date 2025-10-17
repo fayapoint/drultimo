@@ -3,8 +3,8 @@ import { getAgenda } from "@/lib/agenda";
 
 export const metadata = { title: "Agenda | Dr. Ultimo & Convidados" };
 
-export default function AgendaPage() {
-  const proximos = getAgenda().slice(0, 20);
+export default async function AgendaPage() {
+  const proximos = (await getAgenda()).slice(0, 20);
   return (
     <div className="space-y-6">
       <header className="space-y-2">
