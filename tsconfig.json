@@ -23,5 +23,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "files": ["types/mermaid.d.ts"],
   "exclude": ["node_modules"]
 }
