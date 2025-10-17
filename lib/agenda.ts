@@ -48,7 +48,8 @@ function parseItems(rows: string[][]): AgendaItem[] {
     const slug = iSlug >= 0 ? String(row[iSlug] || "").trim() : "";
     const date = iDate >= 0 ? String(row[iDate] || "").trim() : "";
     if (!title && !slug && !episode && !date) continue;
-    out.push({ episode: Number.isFinite(episode as any) ? episode : undefined, title, slug, date });
+    const ep = typeof episode === "number" && Number.isFinite(episode) ? episode : undefined;
+    out.push({ episode: ep, title, slug, date });
   }
   return out;
 }

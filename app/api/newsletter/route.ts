@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       await fs.writeFile(filePath, JSON.stringify(list, null, 2), "utf8");
     }
     return NextResponse.json({ message: "Inscrição realizada com sucesso." });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Falha ao processar inscrição." }, { status: 500 });
   }
 }

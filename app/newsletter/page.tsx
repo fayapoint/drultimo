@@ -24,7 +24,7 @@ export default function NewsletterPage() {
       } else {
         setStatus({ ok: false, msg: data.error || "Não foi possível inscrever." });
       }
-    } catch (err) {
+    } catch {
       setStatus({ ok: false, msg: "Erro inesperado." });
     } finally {
       setLoading(false);

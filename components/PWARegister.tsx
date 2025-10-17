@@ -10,7 +10,7 @@ export default function PWARegister() {
     if (typeof window === "undefined") return;
     if (!("serviceWorker" in navigator)) return;
     let reg: ServiceWorkerRegistration | null = null;
-    let onControllerChange: ((this: ServiceWorkerContainer, ev: Event) => any) | null = null;
+    let onControllerChange: ((this: ServiceWorkerContainer, ev: Event) => void) | null = null;
 
     (async () => {
       try {

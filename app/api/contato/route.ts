@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     list.push({ name, email, message, ts: new Date().toISOString() });
     await fs.writeFile(filePath, JSON.stringify(list, null, 2), "utf8");
     return NextResponse.json({ message: "Mensagem enviada com sucesso." });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Falha ao enviar mensagem." }, { status: 500 });
   }
 }

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Youtube, Instagram, Twitter, Facebook, Music2, Podcast } from "lucide-react";
 
 export const metadata = { title: "Redes | Dr. Ultimo & Convidados" };

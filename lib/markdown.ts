@@ -6,26 +6,31 @@ import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStringify from "rehype-stringify";
+import type { Plugin, Processor } from "unified";
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
+import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings";
 
 export async function renderMarkdownToHtml(markdown: string): Promise<string> {
-  // Casts to any to avoid TS type conflicts between different unified/vfile versions
-  const processor = unified() as any;
+  const processor = unified() as unknown as Processor;
   const file = await processor
-    .use(remarkParse as any)
-    .use(remarkGfm as any)
-    .use(remarkRehype as any, { allowDangerousHtml: true })
-    .use(rehypeRaw as any)
-    .use(rehypeSlug as any)
-    .use(rehypeAutolinkHeadings as any, {
-      behavior: "append",
-      content: {
-        type: "element",
-        tagName: "span",
-        properties: { className: ["heading-link"] },
-        children: [{ type: "text", value: "#" }],
-      },
-    })
-    .use(rehypeStringify as any)
+    .use(remarkParse as unknown as Plugin<[]>)
+    .use(remarkGfm as unknown as Plugin<[]>)
+    .use(remarkRehype as unknown as Plugin<[RemarkRehypeOptions]>, { allowDangerousHtml: true } satisfies RemarkRehypeOptions)
+    .use(rehypeRaw as unknown as Plugin<[]>)
+    .use(rehypeSlug as unknown as Plugin<[]>)
+    .use(
+      rehypeAutolinkHeadings as unknown as Plugin<[RehypeAutolinkOptions]>,
+      {
+        behavior: "append",
+        content: {
+          type: "element",
+          tagName: "span",
+          properties: { className: ["heading-link"] },
+          children: [{ type: "text", value: "#" }],
+        },
+      } satisfies RehypeAutolinkOptions
+    )
+    .use(rehypeStringify as unknown as Plugin<[]>)
     .process(markdown);
 
   let html = String(file);

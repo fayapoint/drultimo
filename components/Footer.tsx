@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Youtube, Music2, Podcast } from "lucide-react";
+import { Instagram, Twitter, Youtube, Music2, Podcast } from "lucide-react";
 
 export default function Footer() {
   const year = new Date().getFullYear();

@@ -28,7 +28,7 @@ export default function ContatoPage() {
       } else {
         setStatus({ ok: false, msg: data.error || "Não foi possível enviar." });
       }
-    } catch (err) {
+    } catch {
       setStatus({ ok: false, msg: "Erro inesperado." });
     } finally {
       setLoading(false);

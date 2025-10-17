@@ -103,7 +103,6 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = (searchParams.get("q") || "").trim();
   if (!q) return NextResponse.json({ results: [] });
-  const nq = normalize(q);
 
   const entries = getAllEntries();
 
@@ -134,8 +133,19 @@ export async function GET(req: Request) {
   const k = 1.2;
   const b = 0.75;
 
+  type SearchResult = {
+    slug: string;
+    title: string;
+    type: string;
+    episode?: number;
+    href: string;
+    excerpt: string;
+    excerptHtml: string;
+    score: number;
+  };
+
   const results = docs
-    .map((d) => {
+    .map((d): SearchResult | null => {
       // BM25 over content
       let score = 0;
       for (const term of queryTokens) {
@@ -161,7 +171,7 @@ export async function GET(req: Request) {
         score,
       };
     })
-    .filter(Boolean) as any[];
+    .filter((r): r is SearchResult => Boolean(r));
 
   results.sort((a, b) => b.score - a.score);
   return NextResponse.json({ results: results.slice(0, 20) });
